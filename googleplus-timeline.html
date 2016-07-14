@@ -58,7 +58,14 @@ Example:
       @apply(--shadow-elevation-3dp);
       border-radius: 8px;
       background-color: #fff;
-    }git@github.com:ailopera/googleplus-timeline.git
+    }
+    div.paper-header {
+      height: 60px;
+      font-size: 20px;
+      text-align: center;
+      line-height: 60px;
+      padding: 0 10px;
+      color: white;
       transition: height 0.2s;
       border-top-left-radius: 3px;
       border-top-right-radius: 3px;
@@ -583,7 +590,7 @@ width="380px" height="285px" ><google-youtube> -->
           "shared_first": "has shared first: ",
           "months": ["January", "February", "March", "April", "May", "June", "July", "August",
                      "September", "October", "November", "December"],
-          "sec": "second",object.content
+          "sec": "second",
           "secs": "seconds",
           "min": "minute",
           "mins": "minutes",
@@ -624,6 +631,8 @@ width="380px" height="285px" ><google-youtube> -->
       }
     },
 
+    //Functions that add Accuracy defects (user testing purposes)
+    probability: function(probability){
       if (probability > 100 || probability < 0 ) {
         throw "Error: probability must be between 0 and 100"
       }
@@ -649,8 +658,7 @@ width="380px" height="285px" ><google-youtube> -->
           if(this.probability(this.accuracyProbability))
             text = 'Text fail';
           return text;
-        },
-
+    },
     _responseFollowings: function(event, detail){
       //We generate an ajax request to get the post published by the authenticated user
       this.push('user_followings', "me");

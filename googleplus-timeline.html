@@ -42,11 +42,10 @@ Example:
   <style is="custom-style">
     :host {
       display: inline-block;
-      width:  --googleplus-timeline-width: 450px;
-      height:  --googleplus-timeline-height: 450px;
+      width:  var(--googleplus-timeline-width, 450px);
+      height:  var(--googleplus-timeline-height, 450px);
       min-height: 200px;
       min-width: 200px;
-
       font-family: helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
       color:#2e2e2e;
     }
@@ -55,9 +54,9 @@ Example:
     paper-header-panel {
       width: 100%;
       height: 100%;
-      @apply(--shadow-elevation-3dp);
       border-radius: 8px;
       background-color: #fff;
+      @apply(--shadow-elevation-3dp);
     }
     div.paper-header {
       height: 60px;
@@ -324,10 +323,11 @@ Example:
   <template id="template">
     <iron-ajax
                id="requestFollowing"
-               url="https://www.googleapis.com/plus/v1/people/me/people/visible"
+               url="https://www.googleapis.com/plus/v1/people/me/people/visible?api_key={{api_key}}"
                method="GET"
                handleAs='json'
                on-response="_responseFollowings"
+               param="{access_token:{{token}}}"
                >
     </iron-ajax>
 
@@ -548,6 +548,11 @@ width="380px" height="285px" ><google-youtube> -->
         type: Number,
         value: 0
       },
+      api_key: {
+        type: String,
+        reflectToAttribute: true,
+        notify:true
+      },
       //Represents the desired range of time that will cover a specific page
       // (one month = 2678400000 millis)
       millis_range_timestamp: {
@@ -622,35 +627,7 @@ width="380px" height="285px" ><google-youtube> -->
       language_data: {
         type: Object,
         value: []
-      },
-      accuracyProbability: {
-        type: Number,
-        value: 15,
-        reflectToAttribute: true,
-        notify: true
       }
-    },
-
-    //Functions that add Accuracy defects (user testing purposes)
-    probability: function(probability){
-      if (probability > 100 || probability < 0 ) {
-        throw "Error: probability must be between 0 and 100"
-      }
-      var number = Math.random();
-      number = Math.trunc(number*100);
-      if (number < probability) {
-        return true;
-      } else {
-        return false;
-      }
-    },
-
-    _changeUserId: function(item) {
-      userId = item.actor.displayName;
-      console.log(this.accuracyProbability);
-      if(this.probability(this.accuracyProbability))
-        userId = this.language_data.user;
-      return userId;
     },
 
     _responseFollowings: function(event, detail){
@@ -711,7 +688,6 @@ width="380px" height="285px" ><google-youtube> -->
     _updateTimelinePosts: function(user_post){
       // If the post was published inside the period fixed for the page, we add it to the 
       // list of post that are being showed to the user
-      user_post.actor.displayName =  this._changeUserId(user_post);
       if(user_post.published >= this.page_timestamp){
         this.push('timeline_posts', user_post);
         //We increment the var that represents the posts displayed per page

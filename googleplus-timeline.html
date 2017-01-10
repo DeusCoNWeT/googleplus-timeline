@@ -42,8 +42,8 @@ Example:
   <style is="custom-style">
     :host {
       display: inline-block;
-      width:  --github-events-width: 450px;
-      height:  --github-events-height: 450px;
+      width:  var(--github-events-width, 450px);
+      height:  var(--github-events-height, 450px);
       min-height: 200px;
       min-width: 200px;
 
@@ -324,7 +324,7 @@ Example:
   <template id="template">
     <iron-ajax
                id="requestFollowing"
-               url="https://www.googleapis.com/plus/v1/people/me/people/visible"
+               url="https://www.googleapis.com/plus/v1/people/me/people/visible?api_key={{api_key}}"
                method="GET"
                handleAs='json'
                on-response="_responseFollowings"
@@ -566,6 +566,11 @@ width="380px" height="285px" ><google-youtube> -->
       last_retrieved_page: {
         type: Object,
         value: []
+      },
+      api_key: {
+          type:String,
+          reflectToAttribute:true,
+          notify: true
       },
       user_followings: {
         type: Object,

@@ -314,7 +314,7 @@ Example:
   <template id="template">
     <iron-ajax
                id="requestFollowing"
-               url="https://www.googleapis.com/plus/v1/people/me/people/visible"
+               url="https://www.googleapis.com/plus/v1/people/me/people/visible?api_key={{api_key}}"
                method="GET"
                handleAs='json'
                on-response="_responseFollowings"
@@ -553,6 +553,12 @@ Example:
         last_retrieved_page: {
           type: Object,
           value: []
+        },
+        api_key: {
+          type: String,
+          reflectToAttribute: true,
+          notify:true
+
         },
         user_followings: {
           type: Object,

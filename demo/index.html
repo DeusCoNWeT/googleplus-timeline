@@ -22,7 +22,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
     <template id="Demo" is="dom-bind">  
-      <googleplus-timeline token="" language="{{language}}"
+      <googleplus-timeline token="{{token}}" language="{{language}}" api_key="{{api_key}}"
       latency-time=1000>
       </googleplus-timeline>
       </br></br>
@@ -31,6 +31,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
     <script>
       Demo.language = "es";
+      Demo.token = "ya29.CjnPA7ijuAvHRLPRaimF05UFtr7dG6sgy6kkyCtKT5H7NOZyd6uqmXiRM4DSiCWCLAepmlU0E3qxzkc";
+      Demo.api_key = "AIzaSyAArT6pflqm1-rj9Nwppuj_4z15FFh4Kis";
       Demo.changeIdiom = function(event,detail) {
         Demo.language = event.target.getAttribute('name');
       }

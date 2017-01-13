@@ -42,18 +42,20 @@ Example:
     <style is="custom-style">
     :host {
       display: inline-block;
-      --google-events-width: 450px;
-      --google-events-height: 450px;
+      width: var(--google-timeline-width, 450px);
+      height: var(--google-timeline-height, 450px);
+      min-height: 250px;
+      min-width: 250px;
       font-family: helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
       color:#2e2e2e;
     }
 
     /* Header styles */
     paper-header-panel {
-      width: var(--google-events-width);
-      height: var(--google-events-height);
-      @apply(--shadow-elevation-3dp);
+      width: 100%;
+      height: 100%;
       border-radius: 8px;
+      @apply(--shadow-elevation-3dp);
     }
     div.paper-header {
       height: 60px;
@@ -328,6 +330,14 @@ Example:
                on-response="_responsePosts"
                >
     </iron-ajax>
+    <iron-ajax
+               id="requestMock"
+               method="GET"
+               handleAs='json'
+               url="{{mockUrl}}"
+               on-response="_responseFollowings"
+               >
+    </iron-ajax>
 
       <paper-header-panel mode="waterfall" class="red">
         <div class="paper-header">
@@ -493,8 +503,12 @@ Example:
           <!-- "Load More" button -->
           
           <!-- <template is="dom-if" if="{{_thereAreMorePosts(item)}}"> -->
-            <div on-click="_loadMorePosts" class="horizontal center-justified layout" id="loadMoreDiv">
-            <paper-button id="loadMoreButton">{{language_data.load_more}}</paper-button>
+            <div id="loading">
+                <!--<img src="http://www.downgraf.com/wp-content/uploads/2014/09/01-progress.gif" width="100%">-->
+                <img src="http://i.imgur.com/S3YnJBQ.jpg" width="100%">
+            </div>
+            <div on-click="_loadMorePosts" class="horizontal center-justified layout" id="loadMoreDiv" hidden>
+              <paper-button id="loadMoreButton">{{language_data.load_more}}</paper-button>
             </div>
           <!-- </template> -->
         </div>
@@ -619,31 +633,38 @@ Example:
           reflectToAttribute: true,
           value: 2000,
           notify: true
+        },
+        mockUrl: {
+            type: String,
+            value: function(){
+                return this.resolveUrl('mockData/following.json');
+            },
         }
     },
     //Function to introduce latency defects
     // Adds latency when it is called
-    sleep: function(milliseconds) {
-      console.log(milliseconds);
-      var start = new Date().getTime();
-      while ((new Date().getTime() - start) <= milliseconds);
+    sleep: function(milliseconds,cb) {
+        window.setTimeout(cb,milliseconds);
     },
 
     _responseFollowings: function(event, detail){
       //We add latency to the component
-      this.sleep(this.latencyTime);
-      //We generate an ajax request to get the post published by the authenticated user
-      this.push('user_followings', "me");
-      this.$.requestPosts.setAttribute("url", this._getRequestPostsURL("me"));
-      this.$.requestPosts.generateRequest();
-      //We generate an ajax request for each user that the authenticated user follows 
-      for (i=0;i<detail.response.items.length;i++) {
-        user_id = detail.response.items[i].id;
-        //We add the user_id to an auxiliar structure
-        this.push('user_followings', user_id);
-        this.$.requestPosts.setAttribute("url", this._getRequestPostsURL(user_id));
-        this.$.requestPosts.generateRequest();
-      }
+      var that = this;
+      this.sleep(this.latencyTime, function(){
+        
+        //We generate an ajax request to get the post published by the authenticated user
+        that.push('user_followings', "me");
+        that.$.requestPosts.setAttribute("url", that._getRequestPostsURL("me"));
+        that.$.requestPosts.generateRequest();
+        //We generate an ajax request for each user that the authenticated user follows 
+        for (i=0;i<detail.response.items.length;i++) {
+            user_id = detail.response.items[i].id;
+            //We add the user_id to an auxiliar structure
+            that.push('user_followings', user_id);
+            that.$.requestPosts.setAttribute("url", that._getRequestPostsURL(user_id));
+            that.$.requestPosts.generateRequest();
+        }
+      });
     },
 
     _getRequestPostsURL: function(user_id){
@@ -702,6 +723,7 @@ Example:
     },
 
     _responsePosts: function(event, detail){
+      this.$.loading.hidden = true;
       // We reset the params field for the next request of requestPost iron-ajax 
       this.$.requestPosts.setAttribute("params", '{}');
       
@@ -728,6 +750,7 @@ Example:
         // We obtain the next page for the user_posts, in order to obtain all the post in a given period (specified by page_timestamp)
 
         this._obtainNextPagePost(current_page_details.author, current_page_details.timestamp, current_page_details.nextPageToken);  
+        this.$.loadMoreDiv.hidden = false;
       }
     },
 
@@ -764,7 +787,7 @@ Example:
                   "Timing-Allow-origin": "*"};
         this.$.requestFollowing.setAttribute("headers", JSON.stringify(headers));
         this.$.requestPosts.setAttribute("headers", JSON.stringify(headers));
-        this.$.requestFollowing.generateRequest();
+        this.$.requestMock.generateRequest();
         }
     },
 

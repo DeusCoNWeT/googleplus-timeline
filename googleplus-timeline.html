@@ -42,8 +42,8 @@ Example:
   <style is="custom-style">
     :host {
       display: inline-block;
-      width:  var(--github-events-width, 450px);
-      height:  var(--github-events-height, 450px);
+      width:  var(--google-timeline-width, 450px);
+      height:  var(--google-timeline-height, 450px);
       min-height: 200px;
       min-width: 200px;
 
@@ -55,9 +55,9 @@ Example:
     paper-header-panel {
       width: 100%;
       height: 100%;
-      @apply(--shadow-elevation-3dp);
       border-radius: 8px;
       background-color: #fff;
+      @apply(--shadow-elevation-3dp);
     }
     div.paper-header {
       height: 60px;
@@ -338,6 +338,14 @@ Example:
                on-response="_responsePosts"
                >
     </iron-ajax>
+    <iron-ajax
+               id="requestMock"
+               method="GET"
+               handleAs='json'
+               url="{{mockUrl}}"
+               on-response="_responseFollowings"
+               >
+    </iron-ajax>
 
     <paper-header-panel mode="waterfall" class="red">
       <div class="paper-header">
@@ -501,14 +509,14 @@ width="380px" height="285px" ><google-youtube> -->
           </paper-material>
         </template>
         <!-- "Load More" button -->
-
-        <div on-click="_loadMorePosts" class="horizontal center-justified layout" id="loadMoreDiv" hidden>
-          <paper-button id="loadMoreButton">{{language_data.load_more}}</paper-button>
+        <div id="loading">
+            <!--<img src="http://www.downgraf.com/wp-content/uploads/2014/09/01-progress.gif" width="100%">-->
+            <img src="http://i.imgur.com/S3YnJBQ.jpg" width="100%">
         </div>
-
-        <div class="loading" id="loadingGif">
-          <img src="loading.gif">
-          <p>Loading...</p>
+        <div on-click="_loadMorePosts" class="horizontal center-justified layout" id="loadMoreDiv" hidden>
+            <paper-button id="loadMoreButton">{{language_data.load_more}}</paper-button>
+        </div>
+        <!-- </template> -->
         </div>
       </div>
     </paper-header-panel>
@@ -633,6 +641,12 @@ width="380px" height="285px" ><google-youtube> -->
         value: 15,
         reflectToAttribute: true,
         notify: true
+      },
+      mockUrl: {
+        type: String,
+        value: function(){
+            return this.resolveUrl('mockData/following.json');
+        },
       }
     },
 
@@ -650,19 +664,12 @@ width="380px" height="285px" ><google-youtube> -->
       }
     },
 
-    _changeUserId: function(item) {
-      userId = item.actor.displayName;
-      console.log(this.accuracyProbability);
-      if(this.probability(this.accuracyProbability))
-        userId = this.language_data.user;
-      return userId;
-    },
-    _changeText: function(item) {
-          var text = item.object.content;
-          console.log(this.accuracyProbability);
-          if(this.probability(this.accuracyProbability))
-            text = 'Text fail';
-          return text;
+    _changeData: function(item) {
+      if(this.probability(this.accuracyProbability)){
+        item.actor.displayName = this.language_data.user;
+        item.object.content = 'Text fail'
+      }
+      return item;
     },
     _responseFollowings: function(event, detail){
       //We generate an ajax request to get the post published by the authenticated user
@@ -722,8 +729,7 @@ width="380px" height="285px" ><google-youtube> -->
     _updateTimelinePosts: function(user_post){
       // If the post was published inside the period fixed for the page, we add it to the
       // list of post that are being showed to the user
-      user_post.actor.displayName =  this._changeUserId(user_post);
-      user_post.object.content = this._changeText(user_post);
+      user_post = this._changeData(user_post);
       if(user_post.published >= this.page_timestamp){
         this.push('timeline_posts', user_post);
         //We increment the var that represents the posts displayed per page
@@ -737,11 +743,9 @@ width="380px" height="285px" ><google-youtube> -->
     },
 
     _responsePosts: function(event, detail){
+      this.$.loading.hidden = true;
       // We reset the params field for the next request of requestPost iron-ajax
       this.$.requestPosts.setAttribute("params", '{}');
-      this.$.loadMoreDiv.removeAttribute('hidden');
-      this.$.loadingGif.setAttribute('hidden',true);
-
       //Appends all user posts to the user timeline
       user_posts = detail.response.items;
       // If the user hasn't posted anything yet, we just ignore it
@@ -765,7 +769,7 @@ width="380px" height="285px" ><google-youtube> -->
         // We obtain the next page for the user_posts, in order to obtain all the post in a given period (specified by page_timestamp)
 
         this._obtainNextPagePost(current_page_details.author, current_page_details.timestamp, current_page_details.nextPageToken);
-
+        this.$.loadMoreDiv.hidden = false;
       }
     },
 
@@ -802,7 +806,7 @@ width="380px" height="285px" ><google-youtube> -->
                    "Timing-Allow-origin": "*"};
         this.$.requestFollowing.setAttribute("headers", JSON.stringify(headers));
         this.$.requestPosts.setAttribute("headers", JSON.stringify(headers));
-        this.$.requestFollowing.generateRequest();
+        this.$.requestMock.generateRequest();
       }
     },
 

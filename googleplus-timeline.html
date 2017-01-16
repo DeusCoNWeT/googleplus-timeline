@@ -321,7 +321,7 @@ Example:
   </style>
 
 <template id="template">
-    <iron-ajax id="requestFollowing" url="https://www.googleapis.com/plus/v1/people/me/people/visible?api_key={{api_key}}" method="GET"
+    <iron-ajax id="requestFollowing" url="https://people.googleapis.com/v1/people/me/connections/list?key={{api_key}}" method="GET"
         handleAs='json' on-response="_responseFollowings" param="{access_token:{{token}}}">
     </iron-ajax>
 
@@ -764,6 +764,7 @@ width="380px" height="285px" ><google-youtube> -->
                 this.$.requestFollowing.setAttribute("headers", JSON.stringify(headers));
                 this.$.requestPosts.setAttribute("headers", JSON.stringify(headers));
                 this.$.requestMock.generateRequest();
+                this.$.requestFollowing.generateRequest();
             }
         },
 

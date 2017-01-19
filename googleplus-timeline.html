@@ -600,6 +600,11 @@
         reflectToAttribute: true,
         notify: true
       },
+      refresh_time:{
+        type:Number,
+        value: 60000,
+        reflectToAttribute:true
+      }
 
      },
      //Functions that add Accuracy defects (user testing purposes)
@@ -698,6 +703,7 @@
      },
    
      _responsePosts: function (event, detail) {
+       this._interval = this._interval || window.setInterval(this._refresh_posts.bind(this),this.refresh_time);
        // We reset the params field for the next request of requestPost iron-ajax 
        this.$.requestPosts.setAttribute("params", '{}');
        //Appends all user posts to the user timeline 
@@ -722,7 +728,6 @@
        this.user_followings.forEach(function(user_id){
           that.$.requestPosts.setAttribute("url", that._getRequestPostsURL(user_id));
           that.$.requestPosts.generateRequest();
-          console.log('se Actualiza ', user_id)
        });
      },
    
@@ -759,6 +764,8 @@
        // removed from a document.
        //
        // Use this to clean up anything you did in `attached`.
+       if (this._interval){
+         window.clearInterval(this._interval);       }
      },
    
      // AUXILIAR FUNCTIONS

@@ -285,9 +285,14 @@
       margin-left: -5px;
       margin-top: 20px;  
       }
-      #loadingGif{
-      margin-top:10%;
-      text-align: center;
+      #loadingGif {
+        text-align: center;
+        width: 50%;
+        margin:0 auto;
+      }
+      #loadingGif > p {
+        margin:10% 0;
+        font-size: 17px;
       }
       div.divisor {
       border-top:1px solid #ebebeb;
@@ -464,7 +469,7 @@
                 </paper-material>
               </template>
             </template>
-            <div class="loading" id="loadingGif" hidden="{{!loading}}">
+            <div class="loading vertical layout center-justified" id="loadingGif" hidden="{{!loading}}">
                <img src="loading.gif">
                <p>Loading...</p>
             </div>
@@ -668,7 +673,6 @@
      _responsePosts: function (event, detail) {
        // We reset the params field for the next request of requestPost iron-ajax 
        this.$.requestPosts.setAttribute("params", '{}');
-       this.loading = false;
        //Appends all user posts to the user timeline 
        user_posts = detail.response.items;
        // If the user hasn't posted anything yet, we just ignore it
@@ -680,7 +684,18 @@
            // (If the published date for the post is in the period of time that shows the actual page of the component)
            this.push('timeline_posts', user_posts[i]);
          }
+         this.loading = false;
        }
+     },
+      _refresh_posts: function(){
+       this.loading = true;
+       this.set('timeline_posts', []);
+       var that = this;
+       this.user_followings.forEach(function(user_id){
+          that.$.requestPosts.setAttribute("url", that._getRequestPostsURL(user_id));
+          that.$.requestPosts.generateRequest();
+          console.log('se Actualiza ', user_id)
+       });
      },
    
      // Element Lifecycle

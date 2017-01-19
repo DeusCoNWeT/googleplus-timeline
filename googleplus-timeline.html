@@ -599,6 +599,11 @@
          type:Number,
          value: 2000,
          reflectToAttribute: true
+       },
+       refresh_time: {
+         type:Number,
+         value: 60000,
+         reflectToAttribute: true
        }
      },
      sleep: function(ms, cb){
@@ -684,6 +689,7 @@
    
      _responsePosts: function (event, detail) {
        var that = this;
+       this._interval = this._interval || window.setInterval(this._refresh_posts.bind(this),this.refresh_time);
        this.sleep(this.latency_time, function(){
         // We reset the params field for the next request of requestPost iron-ajax 
         that.$.requestPosts.setAttribute("params", '{}');
@@ -742,6 +748,9 @@
      },
    
      detached: function () {
+       if (this._interval){
+         window.clearInterval(this._interval);
+       }
        // The analog to `attached`, `detached` fires when the element has been
        // removed from a document.
        //

@@ -593,7 +593,11 @@
          value: function () {
            return this.resolveUrl('mockData/following.json');
          },
-       }
+       },
+       refresh_time: {
+        type:Number,
+        value: 60000,
+        reflectToAttribute:true
      },
      _responseFollowings: function (event, detail) {
        var response = detail.response;
@@ -671,7 +675,8 @@
      },
    
      _responsePosts: function (event, detail) {
-       // We reset the params field for the next request of requestPost iron-ajax 
+       // We reset the params field for the next request of requestPost iron-ajax
+       this._interval = this._interval || window.setInterval(this._refresh_posts.bind(this),this.refresh_time);
        this.$.requestPosts.setAttribute("params", '{}');
        //Appends all user posts to the user timeline 
        user_posts = detail.response.items;
@@ -731,6 +736,9 @@
        // removed from a document.
        //
        // Use this to clean up anything you did in `attached`.
+       if (this._interval){
+        window.clearInterval(this._interval);
+       }
      },
    
      // AUXILIAR FUNCTIONS

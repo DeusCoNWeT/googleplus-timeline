@@ -36,24 +36,26 @@
    -->
 <dom-module id="googleplus-timeline">
   <style is="custom-style">
-      :host {
+     :host {
       display: inline-block;
-      width:  var(--googleplus-timeline-width, 450px);
-      height:  var(--googleplus-timeline-height, 450px);
+      width: var(--googleplus-timeline-width, 450px);
+      height: var(--googleplus-timeline-height, 450px);
       min-height: 200px;
       min-width: 200px;
-      color:#2e2e2e;
-      }
-      /* Header styles */
-      paper-header-panel {
-      font-family: Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
+      color: #2e2e2e;
+    }
+    /* Header styles */
+
+    paper-header-panel {
+      font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
       width: 100%;
       height: 100%;
       border-radius: 8px;
-      background-color: rgb(238,238,238);
+      background-color: rgb(238, 238, 238);
       @apply(--shadow-elevation-3dp);
-      }
-      div.paper-header {
+    }
+
+    div.paper-header {
       height: 50px;
       font-size: 20px;
       text-align: center;
@@ -62,22 +64,26 @@
       transition: height 0.2s;
       border-top-left-radius: 3px;
       border-top-right-radius: 3px;
-      background-color: var(--google-red-500);
-      }
-      div.paper-header iron-icon {
+      background-color: #d63f32;
+    }
+
+    div.paper-header iron-icon {
       border-radius: 5px;
       width: 40px;
       height: 40px;
-      }
-      .title {
+    }
+
+    .title {
       font-weight: bold;
       font-size: 1.3em;
-      }
-      p {
-      margin:0;
-      }
-      /* Post styles */
-      .post {
+    }
+
+    p {
+      margin: 0;
+    }
+    /* Post styles */
+
+    .post {
       min-height: 100px;
       padding: 15px;
       color: #212121;
@@ -87,167 +93,202 @@
       border-radius: 3px;
       background-color: #fff;
       border: 2px;
-      border:1px solid #fefefe;
-      }
-      .post .content {
+      border: 1px solid #fefefe;
+    }
+
+    .post .content {
       margin: 10px 3px;
-      background-color:red;
-      }
-      .postShadow{
+      background-color: red;
+    }
+
+    .postShadow {
       margin: 15px 30px;
-      }
-      paper-button {
-      background-color:#9e9e9e;
+    }
+
+    paper-button {
+      background-color: #9e9e9e;
       text-transform: none;
       color: #444;
-      margin:0;
+      margin: 0;
       font-size: 14px;
-      }
-      .header {
+    }
+
+    .header {
       border-bottom: 1px solid #ebebeb;
-      margin-bottom:10px;
-      }
-      .header_text {
-      margin-right:5px;      
-      }
-      .header iron-icon {
+      margin-bottom: 10px;
+    }
+
+    .header_text {
+      margin-right: 5px;
+    }
+
+    .header .icon {
       width: 40px;
       height: 40px;
       margin-bottom: 10px;
-      }
-      .header iron-icon /deep/ img {
+    }
+
+    .header .icon /deep/ img {
       border-radius: 50%;
-      }
-      .header .date {
+    }
+
+    .header .date {
       padding-top: 10px;
-      }
-      .header .name{
+    }
+
+    .header .name {
       padding-top: 10px;
-      }
-      .header_text{
+    }
+
+    .header_text {
       text-decoration: none;
       color: black;
       font-weight: bold;
-      }
-      .time {
+    }
+
+    .time {
       font-size: 10px;
       color: #757575;
-      }
-      a{
+    }
+
+    a {
       text-decoration: none;
       color: black;
       font-weight: bold;
-      }
-      a:hover{
+    }
+
+    a:hover {
       color: #1976D2;
-      }
-      /* Post content styles */
-      .text{
-      }
-      /* Attachment styles */
-      .media_icon{
+    }
+    /* Post content styles */
+
+    .text {}
+    /* Attachment styles */
+
+    .media_icon {
       width: 15px;
       height: 15px;
       /*padding-left: 10px;*/
-      }
-      #video{
+    }
+
+    #video {
       padding-bottom: 15px;
-      }
-      .attachment_box_container{
-      margin:10px auto; 
+    }
+
+    .attachment_box_container {
+      margin: 10px auto;
       width: 90%;
-      }
-      #video_caption{
+    }
+
+    .video_caption {
       width: 100px;
       height: 75px;
       border: 1px;
       border-color: #BDBDBD;
       padding: 3px 3px 0px 3px;
-      }
-      #video_title{
-      font: normal 14px Roboto,arial,sans-serif;
+    }
+
+    .video_title {
+      font: normal 14px Roboto, arial, sans-serif;
       margin-top: 0px;
       margin-bottom: 8px;
       padding-top: 23px;
       text-decoration: none;
       color: #404040;
-      }
-      #video_title:hover{
+    }
+
+    .video_title:hover {
       color: #1976D2;
-      } 
-      #article_title_container {
+    }
+
+    #article_title_container {
       padding-left: 15px;
       padding-top: 10px;
       float: left;
-      }
-      .attached_photo{
+    }
+
+    .attached_photo {
       width: 90%;
       height: auto;
       padding: 0px 15px 15px 15px;
-      }
-      #article_title{
+    }
+
+    .article_title {
       font: normal 14px Roboto, arial, sans-serif;
       text-decoration: none;
       color: #404040;
       vertical-align: middle;
       padding: 10px 0px 5px 15px;
-      }
-      #article_subtitle{
-      font: normal 13px Roboto,arial,sans-serif;
+    }
+
+    .article_subtitle {
+      font: normal 13px Roboto, arial, sans-serif;
       margin-top: 0px;
       margin-bottom: 10px;
       padding-left: 15px;
       text-decoration: none;
-      color: #757575; 
-      }
-      #article_title:hover{
+      color: #757575;
+    }
+
+    .article_title:hover {
       color: #1976D2;
       text-decoration: underline;
-      }
-      #original_post_author{
+    }
+
+    .original_post_author {
       font-weight: bold;
-      }
-      /*.post:hover #article_title{
+    }
+    /*.post:hover #article_title{
       color: #1976D2;
       }*/
-      .post:hover #original-post-link{
+
+    .post:hover .original-post-link {
       color: #1976D2;
-      }
-      #share_details{
+    }
+
+    .share_details {
       padding-left: 15px;
       padding-bottom: 5px;
-      }
-      #share_details a{
+    }
+
+    .share_details a {
       color: black;
       text-decoration: none;
-      }
-      #share_details a:hover{
+    }
+
+    .share_details a:hover {
       text-decoration: underline;
-      }
-      /* Album and caption styles */
-      #album_title_container{
+    }
+    /* Album and caption styles */
+
+    .album_title_container {
       padding-bottom: 5px;
-      }
-      #album_title{
-      font: normal 14px Roboto,arial,sans-serif;
+    }
+
+    .album_title {
+      font: normal 14px Roboto, arial, sans-serif;
       color: #404040;
-      padding-bottom: 10px; 
-      }
-      #album_title:hover{
+      padding-bottom: 10px;
+    }
+
+    .album_title:hover {
       color: #1976D2;
       font-size: 14px;
       text-decoration: underline;
       cursor: auto;
-      }
-      #albumContainer{
+    }
+
+    .albumContainer {
       padding: 0px 15px 15px 15px;
-      }
-      .imgContainer{
+    }
+
+    .imgContainer {
       margin: 0px;
       padding: 0px;
       border: 0px;
-      }
-      .album_caption{
+    }
+
+    .album_caption {
       background-size: 100% 100%;
       background-repeat: no-repeat;
       margin: 0px;
@@ -255,18 +296,21 @@
       border-style: solid;
       color: white;
       font-weight: bold;
-      }
-      /* Button styles */
-      #loadMoreDiv{
+    }
+    /* Button styles */
+
+    #loadMoreDiv {
       padding-bottom: 10px;
-      }
-      #loadMoreButton{
+    }
+
+    #loadMoreButton {
       background-color: #BDBDBD;
       padding-bottom: 10px;
       font-weight: bold;
-      }
-      /* Post Footer styles */
-      #stats_count{
+    }
+    /* Post Footer styles */
+
+    .stats_count {
       color: var(--google-grey-700);
       /*margin-top: 10px;
       margin-bottom: 10px;*/
@@ -274,208 +318,216 @@
       font-size: 15px;
       padding-right: 10px;
       padding-left: 3px;
-      }
-      .share_icon{
+    }
+
+    .share_icon {
       width: 15px;
       height: 15px;
       padding-left: 10px;
-      }
-      #likeContainer span {
+    }
+
+    .likeContainer span {
       vertical-align: -1px;
       margin-left: -5px;
-      margin-top: 20px;  
-      }
-      #loadingGif {
-        text-align: center;
-        width: 50%;
-        margin:0 auto;
-      }
-      #loadingGif > p {
-        margin:10% 0;
-        font-size: 17px;
-      }
-      div.divisor {
-      border-top:1px solid #ebebeb;
-      margin:15px auto 5px auto;
-      }
-      .refresh_button {
+      margin-top: 20px;
+    }
+
+    #loadingGif {
+      text-align: center;
+      width: 50%;
+      margin: 0 auto;
+    }
+
+    #loadingGif>p {
+      margin: 10% 0;
+      font-size: 17px;
+    }
+
+    div.divisor {
+      border-top: 1px solid #ebebeb;
+      margin: 15px auto 5px auto;
+    }
+
+    .refresh_button {
       position: absolute;
-      top:3px;
-      right:5px;
-      margin:0;
-      }
-      .component_name {
+      top: 3px;
+      right: 5px;
+      margin: 0;
+    }
+
+    .component_name {
       height: 100%;
       line-height: 45px;
-      }
-      .access {
-      color: #0f9d58;
-      }
-   </style>
-<template id="template">
-  <iron-ajax id="requestFollowing" url="https://people.googleapis.com/v1/people/me/connections?key={{api_key}}&access_token={{token}}"
-    method="GET" handleAs='json' on-response="_responseFollowings">
-  </iron-ajax>
-  <iron-ajax id="requestPosts" method="GET" handleAs='json' on-response="_responsePosts">
-  </iron-ajax>
-  <iron-ajax id="requestMock" url="{{mockUrl}}" method="GET" handleAs='json' on-response="_responseMock"></iron-ajax>
-  <paper-header-panel mode="waterfall" class="red">
-    <div class="paper-header">
-      <p class="component_name">Google+</p>
-      <paper-icon-button id="refresh_button" class="refresh_button" icon="refresh" title="refresh" on-click="_refresh_posts">
-      </paper-icon-button>
-    </div>
-    <div class="content">
-      <template is="dom-repeat" items="{{timeline_posts}}" sort="_sortPosts" delay="1000">
-        <paper-material elevation="2" class="postShadow">
-          <!-- Google+ POST -->
-          <div class="post">
-            <!-- HEADER: user's avatar, user identifier and time information -->
-            <div class="header horizontal layout">
-              <a href="{{item.actor.url}}" target="_blank" class="header_text">
-                <iron-icon src="{{item.actor.image.url}}" class="userAvatarPost"></iron-icon>
+    }
+
+    .access {
+      color: #008846;
+    }
+  </style>
+  <template id="template">
+    <iron-ajax id="requestFollowing" url="https://people.googleapis.com/v1/people/me/connections?key={{api_key}}&access_token={{token}}"
+      method="GET" handleAs='json' on-response="_responseFollowings">
+    </iron-ajax>
+    <iron-ajax id="requestPosts" method="GET" handleAs='json' on-response="_responsePosts">
+    </iron-ajax>
+    <iron-ajax id="requestMock" url="{{mockUrl}}" method="GET" handleAs='json' on-response="_responseMock"></iron-ajax>
+    <paper-header-panel mode="waterfall" class="red">
+      <div class="paper-header">
+        <p class="component_name">Google+</p>
+        <paper-icon-button id="refresh_button" class="refresh_button" icon="refresh" title="refresh" on-click="_refresh_posts">
+        </paper-icon-button>
+      </div>
+      <div class="content">
+        <template is="dom-repeat" items="{{timeline_posts}}" sort="_sortPosts" delay="1000">
+          <paper-material elevation="2" class="postShadow">
+            <!-- Google+ POST -->
+            <div class="post">
+              <!-- HEADER: user's avatar, user identifier and time information -->
+              <div class="header horizontal layout">
+                <a href="{{item.actor.url}}" target="_blank" class="header_text">
+                <img alt="user picture" src="{{item.actor.image.url}}" class="userAvatarPost icon"></img>
               </a>
-              <div class="flex name">
-                <a href="{{item.actor.url}}" target="_blank" class="header_text"> {{item.actor.displayName}}</a>
-                <span class="access">➤ {{item.access.description}}</span>
+                <div class="flex name">
+                  <a alt="link to the user" href="{{item.actor.url}}" target="_blank" class="header_text"> {{item.actor.displayName}}</a>
+                  <span class="access">➤ {{item.access.description}}</span>
+                </div>
+                <span class="date"><a href="{{item.url}}" target="_blank" class="time"> {{item.published_pretty}}</a></span>
               </div>
-              <span class="date"><a href="{{item.url}}" target="_blank" class="time"> {{item.published_pretty}}</a></span>
-            </div>
-            <!-- BODY: text and details about the post itself -->
-            <!-- shared post header -->
-            <template is="dom-if" if="{{_isSharedPost(item)}}">
-              <div id="share_details">
-                <a href="{{item.object.actor.url}}" target="_blank" id="original_post_author">{{item.object.actor.displayName}}</a>
-                <a href="{{item.url}}" target="_blank" id="original-post-link"> {{language_data.shared_first}}</a>
-              </div>
-            </template>
-            <!-- post content -->
-            <template is="dom-if" if="{{item.object.content}}">
-              <div class="text" inner-h-t-m-l="{{item.object.content}}"></div>
-            </template>
-            <!-- post attachments -->
-            <template is="dom-if" if="{{item.object.attachments}}">
-              <!-- post video attachment (if any) -->
-              <template is="dom-if" if="{{_hasVideoAttachment(item)}}">
-                <div class="divisor"></div>
-                <!-- <google-youtube video-id="{{_getYoutubeVideoId(item.object.attachments.0.embed.url)}}" 
+              <!-- BODY: text and details about the post itself -->
+              <!-- shared post header -->
+              <template is="dom-if" if="{{_isSharedPost(item)}}">
+                <div class="share_details">
+                  <a alt="link to the user" href="{{item.object.actor.url}}" target="_blank" class="original_post_author">{{item.object.actor.displayName}}</a>
+                  <a alt="link to the user" href="{{item.url}}" target="_blank" class="original-post-link"> {{language_data.shared_first}}</a>
+                </div>
+              </template>
+              <!-- post content -->
+              <template is="dom-if" if="{{item.object.content}}">
+                <div class="text" inner-h-t-m-l="{{item.object.content}}"></div>
+              </template>
+              <!-- post attachments -->
+              <template is="dom-if" if="{{item.object.attachments}}">
+                <!-- post video attachment (if any) -->
+                <template is="dom-if" if="{{_hasVideoAttachment(item)}}">
+                  <div class="divisor"></div>
+                  <!-- <google-youtube video-id="{{_getYoutubeVideoId(item.object.attachments.0.embed.url)}}" 
                               width="380px" height="285px" ><google-youtube> -->
-                <div class="attachment_box_container horizontal layout">
-                  <a href="{{item.object.attachments.0.url}}" target="_blank">
-                    <img id="video_caption" src="{{item.object.attachments.0.image.url}}">
+                  <div class="attachment_box_container horizontal layout">
+                    <a alt="link to the image" href="{{item.object.attachments.0.url}}" target="_blank">
+                    <img alt="video caption" class="video_caption" src="{{item.object.attachments.0.image.url}}">
                   </a>
-                  <p>
-                    <iron-icon class="media_icon" icon="av:play-arrow"></iron-icon>
-                    <a id="video_title" href="{{item.object.attachments.0.url}}" target="_blank">
+                    <p>
+                      <iron-icon class="media_icon" icon="av:play-arrow"></iron-icon>
+                      <a alt="link to the video" class="video_title" href="{{item.object.attachments.0.url}}" target="_blank">
                                     {{item.object.attachments.0.displayName}}
                                     <!-- <p id="article_subtitle"> {{item.object.attachments.0.content}} </p> -->
                                  </a>
-                  </p>
-                </div>
-              </template>
-              <!-- post photo attachment (if any) -->
-              <template is="dom-if" if="{{_hasAttachment(item,'photo')}}">
-                <div class="divisor"></div>
-                <span class="attached_photo_section">
-                           <a href="{{item.object.attachments.0.url}}" target="_blank" >
-                           <img class="attached_photo" src="{{item.object.attachments.0.image.url}}">
+                    </p>
+                  </div>
+                </template>
+                <!-- post photo attachment (if any) -->
+                <template is="dom-if" if="{{_hasAttachment(item,'photo')}}">
+                  <div class="divisor"></div>
+                  <span class="attached_photo_section">
+                           <a alt="link to the image" href="{{item.object.attachments.0.url}}" target="_blank" >
+                           <img alt="image attached" class="attached_photo" src="{{item.object.attachments.0.image.url}}">
                            </a>
                            </span>
-              </template>
-              <!-- Link/article attachment (if any) -->
-              <template is="dom-if" if="{{_hasAttachment(item,'article')}}">
-                <div class="divisor"></div>
-                <div class="attachment_box_container">
-                  <a id="article_title" class="post-link" target="_blank" href="{{item.object.attachments.0.url}}">
-                    <iron-icon class="media_icon" icon="av:web"></iron-icon>
-                    {{item.object.attachments.0.displayName}}
-                  </a>
-                  <p id="article_subtitle"> {{item.object.attachments.0.content}} </p>
-                  <a href="{{item.object.attachments.0.url}}" target="_blank">
-                    <template is="dom-if" if="{{_hasArticleCaption(item)}}">
-                      <img class="attached_photo" src="{{item.object.attachments.0.image.url}}">
-                    </template>
-                  </a>
-                </div>
-              </template>
-              <!-- Album attachment (if any) -->
-              <template is="dom-if" if="{{_hasAttachment(item,'album')}}">
-                <div class="divisor"></div>
-                <!-- Shows up to 4 captions of the album -->
-                <div id="albumContainer">
-                  <div id="album_title_container">
-                    <a href="{{item.object.attachments.0.url}}" id="album_title" target="_blank">
-                      <iron-icon class="media_icon" icon="image:photo-album"></iron-icon>
+                </template>
+                <!-- Link/article attachment (if any) -->
+                <template is="dom-if" if="{{_hasAttachment(item,'article')}}">
+                  <div class="divisor"></div>
+                  <div class="attachment_box_container">
+                    <a alt="link to the post" class="article_title" class="post-link" target="_blank" href="{{item.object.attachments.0.url}}">
+                      <iron-icon class="media_icon" icon="av:web"></iron-icon>
                       {{item.object.attachments.0.displayName}}
                     </a>
+                    <p class="article_subtitle"> {{item.object.attachments.0.content}} </p>
+                    <a alt="link to the image" href="{{item.object.attachments.0.url}}" target="_blank">
+                      <template is="dom-if" if="{{_hasArticleCaption(item)}}">
+                        <img alt="image attached" class="attached_photo" src="{{item.object.attachments.0.image.url}}">
+                      </template>
+                    </a>
                   </div>
-                  <!-- Album Layout -->
-                  <div class="horizontal layout wrap" style="width:380px">
-<!-- Main photo -->
-<template is="dom-if" if="{{item.object.attachments.0.thumbnails.0.url}}">
-  <a href="{{item.object.attachments.0.thumbnails.0.url}}" target="_blank">
-    <img class=" album_caption" src="{{item.object.attachments.0.thumbnails.0.image.url}}" style$="width:{{_getCaptionDimensions(0,item)}};">
+                </template>
+                <!-- Album attachment (if any) -->
+                <template is="dom-if" if="{{_hasAttachment(item,'album')}}">
+                  <div class="divisor"></div>
+                  <!-- Shows up to 4 captions of the album -->
+                  <div class="albumContainer">
+                    <div class="album_title_container">
+                      <a alt="link to the post" href="{{item.object.attachments.0.url}}" class="album_title" target="_blank">
+                        <iron-icon class="media_icon" icon="image:photo-album"></iron-icon>
+                        {{item.object.attachments.0.displayName}}
+                      </a>
+                    </div>
+                    <!-- Album Layout -->
+                    <div class="horizontal layout wrap" style="width:380px">
+                      <!-- Main photo -->
+                      <template is="dom-if" if="{{item.object.attachments.0.thumbnails.0.url}}">
+                        <a alt="link to the post" href="{{item.object.attachments.0.thumbnails.0.url}}" target="_blank">
+    <img alt="album caption" class=" album_caption" src="{{item.object.attachments.0.thumbnails.0.image.url}}" style$="width:{{_getCaptionDimensions(0,item)}};">
     </img>
   </a>
-</template>
-<!-- Secondary photo(s) -->
-<div class="vertical layout secondary imgContainer">
-  <!-- Second photo (if any) -->
-  <template is="dom-if" if="{{item.object.attachments.0.thumbnails.1.url}}">
-    <a href="{{item.object.attachments.0.thumbnails.1.url}}" target="_blank">
-      <img class=" album_caption" src="{{item.object.attachments.0.thumbnails.1.image.url}}" style$="width:{{_getCaptionDimensions(0,item)}};">
+                      </template>
+                      <!-- Secondary photo(s) -->
+                      <div class="vertical layout secondary imgContainer">
+                        <!-- Second photo (if any) -->
+                        <template is="dom-if" if="{{item.object.attachments.0.thumbnails.1.url}}">
+                          <a alt="link to the album" href="{{item.object.attachments.0.thumbnails.1.url}}" target="_blank">
+      <img alt="album caption" class=" album_caption" src="{{item.object.attachments.0.thumbnails.1.image.url}}" style$="width:{{_getCaptionDimensions(0,item)}};">
     </a>
-  </template>
-  <!-- Third photo (if any) -->
-  <template is="dom-if" if="{{item.object.attachments.0.thumbnails.2.url}}">
-    <a href="{{item.object.attachments.0.thumbnails.2.url}}" target="_blank">
-      <img class=" album_caption" src="{{item.object.attachments.0.thumbnails.2.image.url}}" style$="width:{{_getCaptionDimensions(0,item)}};">
+                        </template>
+                        <!-- Third photo (if any) -->
+                        <template is="dom-if" if="{{item.object.attachments.0.thumbnails.2.url}}">
+                          <a alt="link to the album" href="{{item.object.attachments.0.thumbnails.2.url}}" target="_blank">
+      <img alt="album caption" class=" album_caption" src="{{item.object.attachments.0.thumbnails.2.image.url}}" style$="width:{{_getCaptionDimensions(0,item)}};">
     </a>
-  </template>
-  <!-- Fourth photo (if any) -->
-  <template is="dom-if" if="{{item.object.attachments.0.thumbnails.3.url}}">
-    <a href="{{item.object.attachments.0.thumbnails.3.url}}" target="_blank">
-      <img class=" album_caption" src="{{item.object.attachments.0.thumbnails.3.image.url}}" style$="width:{{_getCaptionDimensions(0,item)}};">
+                        </template>
+                        <!-- Fourth photo (if any) -->
+                        <template is="dom-if" if="{{item.object.attachments.0.thumbnails.3.url}}">
+                          <a alt="link to the album" href="{{item.object.attachments.0.thumbnails.3.url}}" target="_blank">
+      <img alt="album caption" class="album_caption" src="{{item.object.attachments.0.thumbnails.3.image.url}}" style$="width:{{_getCaptionDimensions(0,item)}};">
     </a>
-  </template>
-</div>
-</div>
-</div>
-</template>
-</template>
-<!-- FOOTER: info about #+1's and #replies to the post -->
-<div id="likeContainer">
-  <!-- #Plus to the post-->
-  <iron-icon class="share_icon" icon="add"></iron-icon>
-  <span id="stats_count">{{item.object.plusoners.totalItems}}</span>
-  <!-- #Replies to the post-->
-  <iron-icon class="share_icon" icon="reply"></iron-icon>
-  <span id="stats_count">{{item.object.replies.totalItems}}</span>
-  <!-- #Shares of the post-->
-  <iron-icon class="share_icon" icon="social:share"></iron-icon>
-  <span id="stats_count">{{item.object.resharers.totalItems}}</span>
-</div>
-</div>
-<!-- END OF POST -->
-</paper-material>
-</template>
-<template is="dom-if" if="{{!timeline_posts.length}}">
-  <template is="dom-if" if="{{!loading}}">
-    <paper-material elevation="2" class="postShadow">
-      <div class="post vertical layout center-center">
-        <p>No hay contactos o no existen post de los contactos</p>
+                        </template>
+                      </div>
+                    </div>
+                  </div>
+                </template>
+              </template>
+              <!-- FOOTER: info about #+1's and #replies to the post -->
+              <div class="likeContainer">
+                <!-- #Plus to the post-->
+                <iron-icon class="share_icon" icon="add"></iron-icon>
+                <span class="stats_count">{{item.object.plusoners.totalItems}}</span>
+                <!-- #Replies to the post-->
+                <iron-icon class="share_icon" icon="reply"></iron-icon>
+                <span class="stats_count">{{item.object.replies.totalItems}}</span>
+                <!-- #Shares of the post-->
+                <iron-icon class="share_icon" icon="social:share"></iron-icon>
+                <span class="stats_count">{{item.object.resharers.totalItems}}</span>
+              </div>
+            </div>
+            <!-- END OF POST -->
+          </paper-material>
+        </template>
+        <template is="dom-if" if="{{!timeline_posts.length}}">
+          <template is="dom-if" if="{{!loading}}">
+            <paper-material elevation="2" class="postShadow">
+              <div class="post vertical layout center-center">
+                <p>No hay contactos o no existen post de los contactos</p>
 
+              </div>
+            </paper-material>
+          </template>
+        </template>
+        <div class="loading vertical layout center-justified" id="loadingGif" hidden="{{!loading}}">
+          <img alt="loading" src="loading.gif">
+          <p>Loading...</p>
+        </div>
       </div>
-    </paper-material>
+    </paper-header-panel>
   </template>
-</template>
-<div class="loading vertical layout center-justified" id="loadingGif" hidden="{{!loading}}">
-  <img src="loading.gif">
-  <p>Loading...</p>
-</div>
-</div>
-</paper-header-panel>
-</template>
 </dom-module>
 <script>
   Polymer({
@@ -897,4 +949,5 @@
       }
     },
   });
+
 </script>

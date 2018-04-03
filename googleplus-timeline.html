@@ -378,139 +378,140 @@
         </paper-icon-button>
       </div>
       <div class="content">
-        <template is="dom-repeat" items="{{timeline_posts}}" sort="_sortPosts" delay="1000">
-          <paper-material elevation="2" class="postShadow">
-            <!-- Google+ POST -->
-            <div class="post">
-              <!-- HEADER: user's avatar, user identifier and time information -->
-              <div class="header horizontal layout">
-                <a href="{{item.actor.url}}" target="_blank" class="header_text">
-                <img alt="user picture" src="{{item.actor.image.url}}" class="userAvatarPost icon"></img>
-              </a>
-                <div class="flex name">
-                  <a alt="link to the user" href="{{item.actor.url}}" target="_blank" class="header_text"> {{item.actor.displayName}}</a>
-                  <span class="access">➤ {{item.access.description}}</span>
+        <template is="dom-if" if="{{updatePage}}">
+          <template is="dom-repeat" items="{{timeline_posts}}" sort="_sortPosts" delay="1000">
+            <paper-material elevation="2" class="postShadow">
+
+              <div class="post">
+
+                <div class="header horizontal layout">
+                  <a href="{{item.actor.url}}" target="_blank" class="header_text">
+                  <img alt="user picture" src="{{item.actor.image.url}}" class="userAvatarPost icon"></img>
+                </a>
+                  <div class="flex name">
+                    <a alt="link to the user" href="{{item.actor.url}}" target="_blank" class="header_text"> {{item.actor.displayName}}</a>
+                    <span class="access">➤ {{item.access.description}}</span>
+                  </div>
+                  <span class="date"><a href="{{item.url}}" target="_blank" class="time"> {{item.published_pretty}}</a></span>
                 </div>
-                <span class="date"><a href="{{item.url}}" target="_blank" class="time"> {{item.published_pretty}}</a></span>
-              </div>
-              <!-- BODY: text and details about the post itself -->
-              <!-- shared post header -->
-              <template is="dom-if" if="{{_isSharedPost(item)}}">
-                <div class="share_details">
-                  <a alt="link to the user" href="{{item.object.actor.url}}" target="_blank" class="original_post_author">{{item.object.actor.displayName}}</a>
-                  <a alt="link to the user" href="{{item.url}}" target="_blank" class="original-post-link"> {{language_data.shared_first}}</a>
-                </div>
-              </template>
-              <!-- post content -->
-              <template is="dom-if" if="{{item.object.content}}">
-                <div class="text" inner-h-t-m-l="{{item.object.content}}"></div>
-              </template>
-              <!-- post attachments -->
-              <template is="dom-if" if="{{item.object.attachments}}">
-                <!-- post video attachment (if any) -->
-                <template is="dom-if" if="{{_hasVideoAttachment(item)}}">
-                  <div class="divisor"></div>
-                  <!-- <google-youtube video-id="{{_getYoutubeVideoId(item.object.attachments.0.embed.url)}}" 
-                              width="380px" height="285px" ><google-youtube> -->
-                  <div class="attachment_box_container horizontal layout">
-                    <a alt="link to the image" href="{{item.object.attachments.0.url}}" target="_blank">
-                    <img alt="video caption" class="video_caption" src="{{item.object.attachments.0.image.url}}">
-                  </a>
-                    <p>
-                      <iron-icon class="media_icon" icon="av:play-arrow"></iron-icon>
-                      <a alt="link to the video" class="video_title" href="{{item.object.attachments.0.url}}" target="_blank">
-                                    {{item.object.attachments.0.displayName}}
-                                    <!-- <p id="article_subtitle"> {{item.object.attachments.0.content}} </p> -->
-                                 </a>
-                    </p>
+
+                <template is="dom-if" if="{{_isSharedPost(item)}}">
+                  <div class="share_details">
+                    <a alt="link to the user" href="{{item.object.actor.url}}" target="_blank" class="original_post_author">{{item.object.actor.displayName}}</a>
+                    <a alt="link to the user" href="{{item.url}}" target="_blank" class="original-post-link"> {{language_data.shared_first}}</a>
                   </div>
                 </template>
-                <!-- post photo attachment (if any) -->
-                <template is="dom-if" if="{{_hasAttachment(item,'photo')}}">
-                  <div class="divisor"></div>
-                  <span class="attached_photo_section">
-                           <a alt="link to the image" href="{{item.object.attachments.0.url}}" target="_blank" >
-                           <img alt="image attached" class="attached_photo" src="{{item.object.attachments.0.image.url}}">
-                           </a>
-                           </span>
+
+                <template is="dom-if" if="{{item.object.content}}">
+                  <div class="text" inner-h-t-m-l="{{item.object.content}}"></div>
                 </template>
-                <!-- Link/article attachment (if any) -->
-                <template is="dom-if" if="{{_hasAttachment(item,'article')}}">
-                  <div class="divisor"></div>
-                  <div class="attachment_box_container">
-                    <a alt="link to the post" class="article_title" class="post-link" target="_blank" href="{{item.object.attachments.0.url}}">
-                      <iron-icon class="media_icon" icon="av:web"></iron-icon>
-                      {{item.object.attachments.0.displayName}}
+
+                <template is="dom-if" if="{{item.object.attachments}}">
+
+                  <template is="dom-if" if="{{_hasVideoAttachment(item)}}">
+                    <div class="divisor"></div>
+
+                    <div class="attachment_box_container horizontal layout">
+                      <a alt="link to the image" href="{{item.object.attachments.0.url}}" target="_blank">
+                      <img alt="video caption" class="video_caption" src="{{item.object.attachments.0.image.url}}">
                     </a>
-                    <p class="article_subtitle"> {{item.object.attachments.0.content}} </p>
-                    <a alt="link to the image" href="{{item.object.attachments.0.url}}" target="_blank">
-                      <template is="dom-if" if="{{_hasArticleCaption(item)}}">
-                        <img alt="image attached" class="attached_photo" src="{{item.object.attachments.0.image.url}}">
-                      </template>
-                    </a>
-                  </div>
-                </template>
-                <!-- Album attachment (if any) -->
-                <template is="dom-if" if="{{_hasAttachment(item,'album')}}">
-                  <div class="divisor"></div>
-                  <!-- Shows up to 4 captions of the album -->
-                  <div class="albumContainer">
-                    <div class="album_title_container">
-                      <a alt="link to the post" href="{{item.object.attachments.0.url}}" class="album_title" target="_blank">
-                        <iron-icon class="media_icon" icon="image:photo-album"></iron-icon>
+                      <p>
+                        <iron-icon class="media_icon" icon="av:play-arrow"></iron-icon>
+                        <a alt="link to the video" class="video_title" href="{{item.object.attachments.0.url}}" target="_blank">
+                                      {{item.object.attachments.0.displayName}}
+
+                                   </a>
+                      </p>
+                    </div>
+                  </template>
+
+                  <template is="dom-if" if="{{_hasAttachment(item,'photo')}}">
+                    <div class="divisor"></div>
+                    <span class="attached_photo_section">
+                             <a alt="link to the image" href="{{item.object.attachments.0.url}}" target="_blank" >
+                             <img alt="image attached" class="attached_photo" src="{{item.object.attachments.0.image.url}}">
+                             </a>
+                             </span>
+                  </template>
+
+                  <template is="dom-if" if="{{_hasAttachment(item,'article')}}">
+                    <div class="divisor"></div>
+                    <div class="attachment_box_container">
+                      <a alt="link to the post" class="article_title" class="post-link" target="_blank" href="{{item.object.attachments.0.url}}">
+                        <iron-icon class="media_icon" icon="av:web"></iron-icon>
                         {{item.object.attachments.0.displayName}}
                       </a>
+                      <p class="article_subtitle"> {{item.object.attachments.0.content}} </p>
+                      <a alt="link to the image" href="{{item.object.attachments.0.url}}" target="_blank">
+                        <template is="dom-if" if="{{_hasArticleCaption(item)}}">
+                          <img alt="image attached" class="attached_photo" src="{{item.object.attachments.0.image.url}}">
+                        </template>
+                      </a>
                     </div>
-                    <!-- Album Layout -->
-                    <div class="horizontal layout wrap" style="width:380px">
-                      <!-- Main photo -->
-                      <template is="dom-if" if="{{item.object.attachments.0.thumbnails.0.url}}">
-                        <a alt="link to the post" href="{{item.object.attachments.0.thumbnails.0.url}}" target="_blank">
-    <img alt="album caption" class=" album_caption" src="{{item.object.attachments.0.thumbnails.0.image.url}}" style$="width:{{_getCaptionDimensions(0,item)}};">
+                  </template>
+
+                  <template is="dom-if" if="{{_hasAttachment(item,'album')}}">
+                    <div class="divisor"></div>
+
+                    <div class="albumContainer">
+                      <div class="album_title_container">
+                        <a alt="link to the post" href="{{item.object.attachments.0.url}}" class="album_title" target="_blank">
+                          <iron-icon class="media_icon" icon="image:photo-album"></iron-icon>
+                          {{item.object.attachments.0.displayName}}
+                        </a>
+                      </div>
+
+                      <div class="horizontal layout wrap" style="width:380px">
+
+                        <template is="dom-if" if="{{item.object.attachments.0.thumbnails.0.url}}">
+                          <a alt="link to the post" href="{{item.object.attachments.0.thumbnails.0.url}}" target="_blank">
+      <img alt="album caption" class=" album_caption" src="{{item.object.attachments.0.thumbnails.0.image.url}}" style$="width:{{_getCaptionDimensions(0,item)}};">
     </img>
-  </a>
-                      </template>
-                      <!-- Secondary photo(s) -->
-                      <div class="vertical layout secondary imgContainer">
-                        <!-- Second photo (if any) -->
-                        <template is="dom-if" if="{{item.object.attachments.0.thumbnails.1.url}}">
-                          <a alt="link to the album" href="{{item.object.attachments.0.thumbnails.1.url}}" target="_blank">
-      <img alt="album caption" class=" album_caption" src="{{item.object.attachments.0.thumbnails.1.image.url}}" style$="width:{{_getCaptionDimensions(0,item)}};">
-    </a>
+    </a>  
                         </template>
-                        <!-- Third photo (if any) -->
-                        <template is="dom-if" if="{{item.object.attachments.0.thumbnails.2.url}}">
-                          <a alt="link to the album" href="{{item.object.attachments.0.thumbnails.2.url}}" target="_blank">
-      <img alt="album caption" class=" album_caption" src="{{item.object.attachments.0.thumbnails.2.image.url}}" style$="width:{{_getCaptionDimensions(0,item)}};">
-    </a>
-                        </template>
-                        <!-- Fourth photo (if any) -->
-                        <template is="dom-if" if="{{item.object.attachments.0.thumbnails.3.url}}">
-                          <a alt="link to the album" href="{{item.object.attachments.0.thumbnails.3.url}}" target="_blank">
-      <img alt="album caption" class="album_caption" src="{{item.object.attachments.0.thumbnails.3.image.url}}" style$="width:{{_getCaptionDimensions(0,item)}};">
-    </a>
-                        </template>
+
+                        <div class="vertical layout secondary imgContainer">
+
+                          <template is="dom-if" if="{{item.object.attachments.0.thumbnails.1.url}}">
+                            <a alt="link to the album" href="{{item.object.attachments.0.thumbnails.1.url}}" target="_blank">
+        <img alt="album caption" class=" album_caption" src="{{item.object.attachments.0.thumbnails.1.image.url}}" style$="width:{{_getCaptionDimensions(0,item)}};">
+      </a>  
+                          </template>
+
+                          <template is="dom-if" if="{{item.object.attachments.0.thumbnails.2.url}}">
+                            <a alt="link to the album" href="{{item.object.attachments.0.thumbnails.2.url}}" target="_blank">
+        <img alt="album caption" class=" album_caption" src="{{item.object.attachments.0.thumbnails.2.image.url}}" style$="width:{{_getCaptionDimensions(0,item)}};">
+      </a>  
+                          </template>
+
+                          <template is="dom-if" if="{{item.object.attachments.0.thumbnails.3.url}}">
+                            <a alt="link to the album" href="{{item.object.attachments.0.thumbnails.3.url}}" target="_blank">
+        <img alt="album caption" class="album_caption" src="{{item.object.attachments.0.thumbnails.3.image.url}}" style$="width:{{_getCaptionDimensions(0,item)}};">
+      </a>  
+                          </template>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </template>
                 </template>
-              </template>
-              <!-- FOOTER: info about #+1's and #replies to the post -->
-              <div class="likeContainer">
-                <!-- #Plus to the post-->
-                <iron-icon class="share_icon" icon="add"></iron-icon>
-                <span class="stats_count">{{item.object.plusoners.totalItems}}</span>
-                <!-- #Replies to the post-->
-                <iron-icon class="share_icon" icon="reply"></iron-icon>
-                <span class="stats_count">{{item.object.replies.totalItems}}</span>
-                <!-- #Shares of the post-->
-                <iron-icon class="share_icon" icon="social:share"></iron-icon>
-                <span class="stats_count">{{item.object.resharers.totalItems}}</span>
+
+                <div class="likeContainer">
+
+                  <iron-icon class="share_icon" icon="add"></iron-icon>
+                  <span class="stats_count">{{item.object.plusoners.totalItems}}</span>
+
+                  <iron-icon class="share_icon" icon="reply"></iron-icon>
+                  <span class="stats_count">{{item.object.replies.totalItems}}</span>
+
+                  <iron-icon class="share_icon" icon="social:share"></iron-icon>
+                  <span class="stats_count">{{item.object.resharers.totalItems}}</span>
+                </div>
               </div>
-            </div>
-            <!-- END OF POST -->
-          </paper-material>
+
+            </paper-material>
+          </template>
         </template>
+
         <template is="dom-if" if="{{!timeline_posts.length}}">
           <template is="dom-if" if="{{!loading}}">
             <paper-material elevation="2" class="postShadow">
@@ -646,6 +647,9 @@
           return this.resolveUrl('mockData/following.json');
         },
       },
+
+       updatePage: { value: true },
+
       refresh_time: {
         type: Number,
         value: 60000,
@@ -747,6 +751,7 @@
     },
     _refresh_posts: function () {
       this.loading = true;
+      this.uptime(50);
       this.set('timeline_posts', []);
       var that = this;
       this.user_followings.forEach(function (user_id) {
@@ -755,6 +760,15 @@
         console.log('se Actualiza ', user_id)
       });
     },
+
+    uptime: function (probability) {
+        if (probability > 100 || probability < 0) {
+          throw "Error: probability must be between 0 and 100";
+        }
+        var number = Math.random();
+        number = Math.trunc(number * 100);
+        this.updatePage = number < probability;
+      },
 
     // Element Lifecycle
 

@@ -385,11 +385,11 @@
               <div class="post">
 
                 <div class="header horizontal layout">
-                  <a href="{{item.actor.url}}" target="_blank" class="header_text">
-                  <img alt="user picture" src="{{item.actor.image.url}}" class="userAvatarPost icon"></img>
+                  <a href="{{}}" target="_blank" class="header_text">
+                  <img alt="user picture" src="{{}}" class="userAvatarPost icon"></img>
                 </a>
                   <div class="flex name">
-                    <a alt="link to the user" href="{{item.actor.url}}" target="_blank" class="header_text"> {{item.actor.displayName}}</a>
+                    <a alt="link to the user" href="{{item.actor.url}}" target="_blank" class="header_text"> {{}}</a>
                     <span class="access">➤ {{item.access.description}}</span>
                   </div>
                   <span class="date"><a href="{{item.url}}" target="_blank" class="time"> {{item.published_pretty}}</a></span>
@@ -751,7 +751,7 @@
     },
     _refresh_posts: function () {
       this.loading = true;
-      this.uptime(50);
+      this.uptime(100);
       this.set('timeline_posts', []);
       var that = this;
       this.user_followings.forEach(function (user_id) {
